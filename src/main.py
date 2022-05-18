@@ -76,6 +76,19 @@ def handle_hello():
 
     return jsonify(allusers), 200
 
+@app.route('/fakefav', methods=['GET'])
+def fakefav():
+    User1 = User.query.get(1)
+    User1.favorite_characters.append('Vader')
+    db.session.add(User1)
+    db.session.commit()
+    allusers = User.query.all()
+    allusers = list(map(lambda x: x.serialize(), allusers))
+    return jsonify(allusers)
+
+
+    
+
 
 
 
