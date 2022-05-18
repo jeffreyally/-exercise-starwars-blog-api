@@ -32,7 +32,7 @@ class Character(db.Model):
     __tablename__ = 'character'
     id = db.Column(db.Integer, primary_key=True)
     character_name = db.Column(db.String(40))
-    user = db.Column(db.Integer, db.ForeignKey('user.id'))
+    favorited_by = db.Column(db.Integer, db.ForeignKey('user.id'))
     
 
     def __repr__(self):
@@ -42,7 +42,7 @@ class Character(db.Model):
         return {
             "id": self.id,
             "character_name": self.character_name,
-            "favorited_by": self.favorited_by,
+            "favorited_by":self.favorited_by
             
             
         }

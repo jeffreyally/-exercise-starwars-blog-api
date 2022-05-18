@@ -8,7 +8,7 @@ from flask_swagger import swagger
 from flask_cors import CORS
 from utils import APIException, generate_sitemap
 from admin import setup_admin
-from models import db, User
+from models import db, User, Character, Planet
 #from models import Person
 
 app = Flask(__name__)
@@ -50,6 +50,33 @@ def post_user():
     allusers = User.query.all()
     allusers = list(map(lambda x: x.serialize(), allusers))
     return jsonify(allusers)
+
+@app.route('/people', methods=['POST'])
+def post_character():
+    #body = request.get_json()
+    #new_user = User(username= body["username"], email=body["email"], password= body["password"])
+    new_user = Character(character_name = "chewbacca")
+    db.session.add(new_user)
+    db.session.commit()
+    allusers = Character.query.all()
+    allusers = list(map(lambda x: x.serialize(), allusers))
+    return jsonify(allusers)
+
+@app.route('/planets', methods=['POST'])
+def post_planet():
+    #body = request.get_json()
+    #new_user = User(username= body["username"], email=body["email"], password= body["password"])
+    new_user = Planet(planet_name = "alderaan")
+    db.session.add(new_user)
+    db.session.commit()
+    allusers = Planet.query.all()
+    allusers = list(map(lambda x: x.serialize(), allusers))
+    return jsonify(allusers)
+
+
+
+
+    
 
 # this only runs if `$ python src/main.py` is executed
 if __name__ == '__main__':
