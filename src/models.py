@@ -18,8 +18,8 @@ class User(db.Model):
             # do not serialize the password, its a security breach
         }
 
-class Character(db.Model):
-    __tablename__ = 'character'
+class Characters(db.Model):
+    __tablename__ = 'characters'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(250), nullable=False)
     
@@ -34,7 +34,8 @@ class Character(db.Model):
             
         }
 
-class Planet(db.Model):
+class Planets(db.Model):
+    __tablename__ = 'planets'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(250), nullable=False)
    
