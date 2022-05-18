@@ -30,21 +30,11 @@ def handle_invalid_usage(error):
 def sitemap():
     return generate_sitemap(app)
 
-@app.route('/user', methods=['GET'])
-def handle_hello():
-
-    response_body = {
-        "msg": "Hello, this is your GET /user response "
-    }
-
-    return jsonify(response_body), 200
-
-
 
 @app.route('/user', methods=['POST'])
 def post_user():
-    body = request.get_json()
-    new_user = User(username= body["username"], email=body["email"], password= body["password"])
+    
+    new_user = User(username= 'SampleUsername', email='SampleEmail@email.com', password= 'SamplePassword')
     db.session.add(new_user)
     db.session.commit()
     allusers = User.query.all()
@@ -76,6 +66,19 @@ def post_planet():
     allusers = Planet.query.all()
     allusers = list(map(lambda x: x.serialize(), allusers))
     return jsonify(allusers)
+
+@app.route('/user', methods=['GET'])
+def handle_hello():
+
+    allusers = User.query.all()
+    allusers = list(map(lambda x: x.serialize(), allusers))
+    return jsonify(allusers)
+
+    return jsonify(allusers), 200
+
+
+
+
 
 
 
