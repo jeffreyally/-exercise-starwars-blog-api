@@ -43,10 +43,12 @@ def handle_hello():
 
 @app.route('/user', methods=['POST'])
 def post_user():
-    new_user = User(email="my_super@email.com", first_name="mysupername", last_name="mysuperlastname", password="password1")
+    new_user = User(email="bfd_super@email.com", first_name="mysupername", last_name="mysuperlastname", password="password1",is_active=True)
     db.session.add(new_user)
     db.session.commit()
-    return jsonify(new_user.serialize())
+    allusers = User.query.all()
+    allusers = list(map(lambda x: x.serialize(), allusers))
+    return jsonify(allusers)
 
 # this only runs if `$ python src/main.py` is executed
 if __name__ == '__main__':

@@ -20,9 +20,12 @@ class User(db.Model):
         return {
             "id": self.id,
             "email": self.email,
+            "first_name":self.first_name,
+            "last_name":self.last_name,
+            "password":self.password,
             "is_active":self.is_active,
-            "favorite_characters": self.characters,
-            "favorite_planets": self.planets,
+            "favorite_characters": self.favorite_characters,
+            "favorite_planets": self.favorite_planets,
             
         }
 
