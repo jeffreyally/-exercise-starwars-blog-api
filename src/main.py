@@ -43,7 +43,8 @@ def handle_hello():
 
 @app.route('/user', methods=['POST'])
 def post_user():
-    new_user = User(email="bfd_super@email.com", first_name="mysupername", last_name="mysuperlastname", password="password1",is_active=True)
+    body = request.get_json()
+    new_user = User(username= body["username"], email=body["email"], password= body["password"])
     db.session.add(new_user)
     db.session.commit()
     allusers = User.query.all()

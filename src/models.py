@@ -5,11 +5,11 @@ db = SQLAlchemy()
 class User(db.Model):
     __tablename__ = 'user'
     id = db.Column(db.Integer, primary_key=True)
-    first_name = db.Column(db.String(250), nullable=False)
-    last_name = db.Column(db.String(250), nullable=False)
-    email = db.Column(db.String(120), unique=True, nullable=False)
+    username = db.Column(db.String(250), nullable=False)
+    
+    email = db.Column(db.String(120), unique=False, nullable=False)
     password = db.Column(db.String(80), unique=False, nullable=False)
-    is_active = db.Column(db.Boolean(), unique=False, nullable=False)
+    #is_active = db.Column(db.Boolean(), unique=False, nullable=False)
     favorite_characters = db.relationship('Character')
     favorite_planets = db.relationship('Planet')
     
@@ -20,10 +20,8 @@ class User(db.Model):
         return {
             "id": self.id,
             "email": self.email,
-            "first_name":self.first_name,
-            "last_name":self.last_name,
             "password":self.password,
-            "is_active":self.is_active,
+            "username":self.username,
             "favorite_characters": self.favorite_characters,
             "favorite_planets": self.favorite_planets,
             
