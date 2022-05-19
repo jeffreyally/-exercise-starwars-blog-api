@@ -56,7 +56,7 @@ def post_character():
     allusers = list(map(lambda x: x.serialize(), allusers))
     return jsonify(allusers)
 
-@app.route('/planets', methods=['POST']) #generates 3 sample starwars planets
+@app.route('/planet', methods=['POST']) #generates 3 sample starwars planets
 def post_planet():
     #body = request.get_json()
     #new_user = User(username= body["username"], email=body["email"], password= body["password"])
@@ -143,7 +143,8 @@ def add_planet_to_favorite(planet_id):
     #     return "This favorite already exists in the favorites list", 400
     if active_user.favorites == None:
         active_user.favorites = planetToAdd.planet_name
-    active_user.favorites = active_user.favorites + ' ' + planetToAdd.planet_name
+    else:
+        active_user.favorites = active_user.favorites + ' ' + planetToAdd.planet_name
     
     db.session.add(active_user)
     db.session.commit()
@@ -156,7 +157,8 @@ def delete_planet_from_favorites(planet_id):
     active_user = User.query.filter_by(is_active=True).first()
     if planetToDelete.planet_name in active_user.favorites:
          PlanetRemoved = active_user.favorites.replace(planetToDelete.planet_name,'',1)
-         active_user.favorites = PlanetRemoved
+         RemoveSpace = PlanetRemoved.replace(' ','',1)
+         active_user.favorites = RemoveSpace
     # if planetToDelete.planet_name+' ' in active_user.favorites:
     #      newFavorites = active_user.favorites.replace(planetToDelete.planet_name+' ','',1)
     #      active_user.favorites = newFavorites
