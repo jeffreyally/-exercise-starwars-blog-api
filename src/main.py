@@ -226,6 +226,13 @@ def delete_character_from_favorites(people_id):
     return jsonify(active_user.serialize())
 
 
+@app.route('/users/favorites', methods=['GET'])#returns one user
+def get_favorites(id):
+
+    active_user = User.query.filter_by(is_active=True).first()
+    return jsonify(active_user.favorites), 200
+
+
 
 
     
