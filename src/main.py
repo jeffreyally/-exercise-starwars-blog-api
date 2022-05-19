@@ -31,7 +31,7 @@ def sitemap():
     return generate_sitemap(app)
 
 
-@app.route('/user', methods=['POST'])#generates the sample user
+@app.route('/createuser', methods=['POST'])#generates the sample user
 def post_user():
     
     new_user = User(username= 'SampleUsername', email='SampleEmail@email.com', password= 'SamplePassword', is_active=True)
@@ -41,7 +41,7 @@ def post_user():
     allPlanets = list(map(lambda x: x.serialize(), allPlanets))
     return jsonify(allPlanets)
 
-@app.route('/people', methods=['POST'])#generates 3 sample starwars characters
+@app.route('/createpeople', methods=['POST'])#generates 3 sample starwars characters
 def post_character():
     #body = request.get_json()
     #new_user = User(username= body["username"], email=body["email"], password= body["password"])
@@ -56,7 +56,7 @@ def post_character():
     allCharacters = list(map(lambda x: x.serialize(), allCharacters))
     return jsonify(allCharacters)
 
-@app.route('/planet', methods=['POST']) #generates 3 sample starwars planets
+@app.route('/createplanet', methods=['POST']) #generates 3 sample starwars planets
 def post_planet():
     #body = request.get_json()
     #new_user = User(username= body["username"], email=body["email"], password= body["password"])
