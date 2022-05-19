@@ -196,10 +196,12 @@ def add_character_to_favorite(people_id):
 def delete_character_from_favorites(people_id):
     CharacterToDelete = Character.query.get(people_id)
     active_user = User.query.filter_by(is_active=True).first()
-    if CharacterToDelete.character_name in active_user.favorites:
-         characterRemoved = active_user.favorites.replace(CharacterToDelete.character_name,'',1)
-         
 
+    if CharacterToDelete.character_name in active_user.favorites:
+         active_user.favorites = active_user.favorites.replace(CharacterToDelete.character_name,'',1)
+
+    if ' '+CharacterToDelete.character_name in active_user.favorites:
+         characterRemoved = active_user.favorites.replace(' '+CharacterToDelete.character_name,'',1)
          active_user.favorites = characterRemoved
     # if planetToDelete.planet_name+' ' in active_user.favorites:
     #      newFavorites = active_user.favorites.replace(planetToDelete.planet_name+' ','',1)
