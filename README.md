@@ -1,3 +1,3 @@
 
-## Remember to migrate every time you change your models
+# Remember to migrate every time you change your models
 
