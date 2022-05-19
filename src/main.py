@@ -147,6 +147,20 @@ def add_planet_to_favorite(planet_id):
     
     return jsonify(active_user.serialize())
 
+@app.route('/favorite/planet/<int:planet_id>', methods=['DELETE']) #deletes the planet from favorites
+def delete_planet_from_favorites(planet_id):
+    planetToDelete = Planet.query.get(planet_id)
+    active_user = User.query.filter_by(is_active=True).first()
+    if planetToDelete.planet_name in active_user.favorites:
+         newFavorites = active_user.favorites.replace(planetToDelete.planet_name,'')
+         active_user.favorites = newFavorites
+    
+    
+    db.session.add(active_user)
+    db.session.commit()
+    
+    return jsonify(active_user.serialize())
+
 
 
 
