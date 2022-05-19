@@ -37,72 +37,68 @@ def post_user():
     new_user = User(username= 'SampleUsername', email='SampleEmail@email.com', password= 'SamplePassword', is_active=True)
     db.session.add(new_user)
     db.session.commit()
-    allusers = User.query.all()
-    allusers = list(map(lambda x: x.serialize(), allusers))
-    return jsonify(allusers)
+    allPlanets = User.query.all()
+    allPlanets = list(map(lambda x: x.serialize(), allPlanets))
+    return jsonify(allPlanets)
 
 @app.route('/people', methods=['POST'])#generates 3 sample starwars characters
 def post_character():
     #body = request.get_json()
     #new_user = User(username= body["username"], email=body["email"], password= body["password"])
-    new_user1 = Character(character_name = "Chewbacca")
-    new_user2 = Character(character_name = "Yoda")
-    new_user3 = Character(character_name = "R2-D2")
-    db.session.add(new_user1)
-    db.session.add(new_user2)
-    db.session.add(new_user3)
+    new_character1 = Character(character_name = "Chewbacca")
+    new_character2 = Character(character_name = "Yoda")
+    new_character3 = Character(character_name = "R2-D2")
+    db.session.add(new_character1)
+    db.session.add(new_character2)
+    db.session.add(new_character3)
     db.session.commit()
-    allusers = Character.query.all()
-    allusers = list(map(lambda x: x.serialize(), allusers))
-    return jsonify(allusers)
+    allCharacters = Character.query.all()
+    allCharacters = list(map(lambda x: x.serialize(), allCharacters))
+    return jsonify(allCharacters)
 
 @app.route('/planet', methods=['POST']) #generates 3 sample starwars planets
 def post_planet():
     #body = request.get_json()
     #new_user = User(username= body["username"], email=body["email"], password= body["password"])
-    new_user1 = Planet(planet_name = "Alderaan")
-    new_user2 = Planet(planet_name = "Naboo")
-    new_user3 = Planet(planet_name = "Mandalore")
-    db.session.add(new_user1)
-    db.session.add(new_user2)
-    db.session.add(new_user3)
+    new_planet1 = Planet(planet_name = "Alderaan")
+    new_planet2 = Planet(planet_name = "Naboo")
+    new_planet3 = Planet(planet_name = "Mandalore")
+    db.session.add(new_planet1)
+    db.session.add(new_planet2)
+    db.session.add(new_planet3)
     db.session.commit()
-    allusers = Planet.query.all()
-    allusers = list(map(lambda x: x.serialize(), allusers))
-    return jsonify(allusers)
+    allPlanets = Planet.query.all()
+    allPlanets = list(map(lambda x: x.serialize(), allPlanets))
+    return jsonify(allPlanets)
 
 @app.route('/user', methods=['GET'])#returns all users
 def get_users():
 
-    allusers = User.query.all()
-    allusers = list(map(lambda x: x.serialize(), allusers))
-    return jsonify(allusers)
+    allUsers = User.query.all()
+    allUsers = list(map(lambda x: x.serialize(), allUsers))
+    
 
-    return jsonify(allusers), 200
+    return jsonify(allPlanets), 200
 
 @app.route('/user/<int:id>', methods=['GET'])#returns one user
 def get_one_user(id):
 
     oneUser = User.query.get(id)
-    
-
     return jsonify(oneUser.serialize()), 200
 
 @app.route('/people', methods=['GET'])#returns all starwars characters
 def get_people():
 
-    allusers = Character.query.all()
-    allusers = list(map(lambda x: x.serialize(), allusers))
-    return jsonify(allusers)
+    allCharacters = Character.query.all()
+    allCharacters = list(map(lambda x: x.serialize(), allCharacters))
+    
 
-    return jsonify(allusers), 200
+    return jsonify(allCharacters), 200
 
-@app.route('/people/<int:id>', methods=['GET'])#returns one starwars characters
+@app.route('/people/<int:id>', methods=['GET'])#returns one starwars character
 def get_one_character(id):
 
     oneCharacter = Character.query.get(id)
-    
-
     return jsonify(oneCharacter.serialize()), 200
 
 
@@ -110,37 +106,27 @@ def get_one_character(id):
 @app.route('/planet', methods=['GET'])#returns all starwars planets
 def get_planets():
 
-    allusers = Planet.query.all()
-    allusers = list(map(lambda x: x.serialize(), allusers))
-    return jsonify(allusers)
+    allPlanets = Planet.query.all()
+    allPlanets = list(map(lambda x: x.serialize(), allPlanets))
+    return jsonify(allPlanets)
 
-    return jsonify(allusers), 200
+    return jsonify(allPlanets), 200
 
 
 @app.route('/planet/<int:id>', methods=['GET'])#returns one starwars planet
 def get_one_planet(id):
 
     onePlanet = Planet.query.get(id)
-    
-
     return jsonify(onePlanet.serialize()), 200
 
-@app.route('/users/favorites', methods=['GET'])#returns favorites from the user
-def user_favorites():
-    theUser = User.query.get(1)
-
-    
-    return jsonify(theUser.favorites), 200
 
 
 
 @app.route('/favorite/planet/<int:planet_id>', methods=['POST']) #adds a planet to favorites
 def add_planet_to_favorite(planet_id):
     planetToAdd = Planet.query.get(planet_id)
-    active_user = User.query.get(1)
-    #active_user = User.query.filter_by(is_active=True).first()
-    # if planetToAdd.planet_name in active_user.favorites:
-    #     return "This favorite already exists in the favorites list", 400
+    active_user = User.query.filter_by(is_active=True).first()
+    
     if active_user.favorites == None:
         active_user.favorites = planetToAdd.planet_name
 
@@ -172,9 +158,7 @@ def delete_planet_from_favorites(planet_id):
     elif planetToDelete.planet_name in active_user.favorites:
          PlanetRemoved = active_user.favorites.replace(planetToDelete.planet_name,'',1)
          active_user.favorites = PlanetRemoved
-    # if planetToDelete.planet_name+' ' in active_user.favorites:
-    #      newFavorites = active_user.favorites.replace(planetToDelete.planet_name+' ','',1)
-    #      active_user.favorites = newFavorites
+    
     db.session.add(active_user)
     db.session.commit()
     
@@ -201,9 +185,9 @@ def add_character_to_favorite(people_id):
     
     return jsonify(active_user.serialize())
 
-@app.route('/favorite/people/<int:people_id>', methods=['DELETE']) #deletes character from favorites
-def delete_character_from_favorites(people_id):
-    CharacterToDelete = Character.query.get(people_id)
+@app.route('/favorite/people/<int:character_id>', methods=['DELETE']) #deletes character from favorites
+def delete_character_from_favorites(character_id):
+    CharacterToDelete = Character.query.get(character_id)
     active_user = User.query.filter_by(is_active=True).first()
 
     if ' '+CharacterToDelete.character_name in active_user.favorites:
