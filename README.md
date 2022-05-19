@@ -9,7 +9,7 @@
 
 
 
-<h2>These routes add favorite planets and favorite characters to the user</h2>
+<h2>These routes add planets and characters to the user favorites</h2>
 
 <h4>They use the POST Method and a number in the URL</h4>
 
@@ -28,6 +28,14 @@
 5. /people/<int:id> (works with an ID number of 1 to 3 and shows one character)
 6. /planets (shows all the planets in the database)
 7. /planets/<int:id> (works with an ID number of 1 to 3 and shows one planet)
+
+
+<h2>These routes delete planets and characters from the user favorites</h2>
+
+<h4>They use the DELETE Method and a number in the URL</h4>
+
+1. /favorite/planet/<int:planet_id> (works with an ID number of 1 to 3 and deletes a planet from the user favorites)
+2. /favorite/people/<int:character_id> (works with an ID number of 1 to 3 and deletes a character from the user favorites)
 
 
 
