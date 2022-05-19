@@ -17,5 +17,20 @@
 2. /favorite/people/<int:people_id> (works with an ID number of 1 to 3 and adds a character to the user favorites)
 
 
+<h2>These routes display info about the user, planets, and characters</h2>
+
+<h4>They use the GET Method and some use a number in the URL</h4>
+
+1. /users/favorites (shows the planets and characters added to the user favorites)
+2. /users (shows all the users in the database)
+3. /users/<int:id> (works with an ID number of 1 only, and shows user info)
+4. /people (shows all the characters in the database)
+5. /people/<int:id> (works with an ID number of 1 to 3 and shows one character)
+6. /planets (shows all the planets in the database)
+7. /planets/<int:id> (works with an ID number of 1 to 3 and shows one planet)
+
+
+
+
 
 
