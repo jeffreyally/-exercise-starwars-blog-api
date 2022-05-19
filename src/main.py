@@ -137,10 +137,13 @@ def user_favorites():
 @app.route('/favorite/planet/<int:planet_id>', methods=['POST']) #adds a planet to favorites
 def add_planet_to_favorite(planet_id):
     planetToAdd = Planet.query.get(planet_id)
-    active_user = User.query.filter_by(is_active=True).first()
+    active_user = User.query.get(1)
+    #active_user = User.query.filter_by(is_active=True).first()
     # if planetToAdd.planet_name in active_user.favorites:
     #     return "This favorite already exists in the favorites list", 400
-    active_user.favorites = active_user.favorites + ' '+ planetToAdd.planet_name
+    if active_user.favorites == None:
+        active_user.favorites = planetToAdd.planet_name
+    active_user.favorites = active_user.favorites + ' ' + planetToAdd.planet_name
     
     db.session.add(active_user)
     db.session.commit()
@@ -152,9 +155,43 @@ def delete_planet_from_favorites(planet_id):
     planetToDelete = Planet.query.get(planet_id)
     active_user = User.query.filter_by(is_active=True).first()
     if planetToDelete.planet_name in active_user.favorites:
-         newFavorites = active_user.favorites.replace(planetToDelete.planet_name,'')
-         active_user.favorites = newFavorites
+         PlanetRemoved = active_user.favorites.replace(planetToDelete.planet_name,'',1)
+         active_user.favorites = PlanetRemoved
+    # if planetToDelete.planet_name+' ' in active_user.favorites:
+    #      newFavorites = active_user.favorites.replace(planetToDelete.planet_name+' ','',1)
+    #      active_user.favorites = newFavorites
+    db.session.add(active_user)
+    db.session.commit()
     
+    return jsonify(active_user.serialize())
+
+@app.route('/favorite/people/<int:people_id>', methods=['POST']) #adds a character to favorites
+def add_character_to_favorite(people_id):
+    CharacterToAdd = Character.query.get(people_id)
+    active_user = User.query.filter_by(is_active=True).first()
+    #active_user = User.query.filter_by(is_active=True).first()
+    # if planetToAdd.planet_name in active_user.favorites:
+    #     return "This favorite already exists in the favorites list", 400
+    if active_user.favorites == None:
+        active_user.favorites = CharacterToAdd.character_name
+    active_user.favorites = active_user.favorites + ' ' + CharacterToAdd.character_name
+    
+    db.session.add(active_user)
+    db.session.commit()
+    
+    return jsonify(active_user.serialize())
+
+@app.route('/favorite/people/<int:people_id>', methods=['DELETE']) #deletes character from favorites
+def delete_character_from_favorites(people_id):
+    CharacterToDelete = Character.query.get(people_id)
+    active_user = User.query.filter_by(is_active=True).first()
+    if CharacterToDelete.character_name in active_user.favorites:
+         characterRemoved = active_user.favorites.replace(CharacterToDelete.character_name,'',1)
+
+         active_user.favorites = characterRemoved
+    # if planetToDelete.planet_name+' ' in active_user.favorites:
+    #      newFavorites = active_user.favorites.replace(planetToDelete.planet_name+' ','',1)
+    #      active_user.favorites = newFavorites
     
     db.session.add(active_user)
     db.session.commit()
