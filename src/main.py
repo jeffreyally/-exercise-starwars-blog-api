@@ -31,7 +31,7 @@ def sitemap():
     return generate_sitemap(app)
 
 
-@app.route('/user', methods=['POST'])#functional
+@app.route('/user', methods=['POST'])#generates the sample user
 def post_user():
     
     new_user = User(username= 'SampleUsername', email='SampleEmail@email.com', password= 'SamplePassword')
@@ -41,7 +41,7 @@ def post_user():
     allusers = list(map(lambda x: x.serialize(), allusers))
     return jsonify(allusers)
 
-@app.route('/people', methods=['POST'])#functional
+@app.route('/people', methods=['POST'])#generates 3 sample starwars characters
 def post_character():
     #body = request.get_json()
     #new_user = User(username= body["username"], email=body["email"], password= body["password"])
@@ -56,7 +56,7 @@ def post_character():
     allusers = list(map(lambda x: x.serialize(), allusers))
     return jsonify(allusers)
 
-@app.route('/planets', methods=['POST']) #functional
+@app.route('/planets', methods=['POST']) #generates 3 sample starwars planets
 def post_planet():
     #body = request.get_json()
     #new_user = User(username= body["username"], email=body["email"], password= body["password"])
@@ -71,7 +71,7 @@ def post_planet():
     allusers = list(map(lambda x: x.serialize(), allusers))
     return jsonify(allusers)
 
-@app.route('/user', methods=['GET'])#functional
+@app.route('/user', methods=['GET'])#returns all users
 def get_users():
 
     allusers = User.query.all()
@@ -80,7 +80,15 @@ def get_users():
 
     return jsonify(allusers), 200
 
-@app.route('/people', methods=['GET'])#functional
+@app.route('/user/<int:id>', methods=['GET'])#returns one user
+def get_one_user(id):
+
+    oneUser = User.query.get(id)
+    
+
+    return jsonify(oneUser.serialize()), 200
+
+@app.route('/people', methods=['GET'])#returns all starwars characters
 def get_people():
 
     allusers = Character.query.all()
@@ -89,7 +97,17 @@ def get_people():
 
     return jsonify(allusers), 200
 
-@app.route('/planet', methods=['GET'])#functional
+@app.route('/people/<int:id>', methods=['GET'])#returns one starwars characters
+def get_one_character(id):
+
+    oneCharacter = Character.query.get(id)
+    
+
+    return jsonify(oneCharacter.serialize()), 200
+
+
+
+@app.route('/planet', methods=['GET'])#returns all starwars planets
 def get_planets():
 
     allusers = Planet.query.all()
@@ -98,19 +116,14 @@ def get_planets():
 
     return jsonify(allusers), 200
 
-@app.route('/onechar', methods=['GET'])
-def char():
 
-    firstchar = Character.query.get(1)
-    firstchar.favorited_by = 1
-    db.session.add(firstchar)
-    db.session.commit()
-    user = User.query.get(1)
-    user.favorites = firstchar.character_name
-  
-    return jsonify(user.favorites)
+@app.route('/planet/<int:id>', methods=['GET'])#returns one starwars planet
+def get_one_planet(id):
 
+    onePlanet = Planet.query.get(id)
     
+
+    return jsonify(onePlanet.serialize()), 200
 
 
 
