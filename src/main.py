@@ -159,9 +159,18 @@ def add_planet_to_favorite(planet_id):
 def delete_planet_from_favorites(planet_id):
     planetToDelete = Planet.query.get(planet_id)
     active_user = User.query.filter_by(is_active=True).first()
-    if planetToDelete.planet_name in active_user.favorites:
+
+    if ' '+planetToDelete.planet_name in active_user.favorites:
+        PlanetRemoved = active_user.favorites.replace(' '+planetToDelete.planet_name,'',1)
+        active_user.favorites = PlanetRemoved
+    
+    elif planetToDelete.planet_name+' ' in active_user.favorites:
+        PlanetRemoved = active_user.favorites.replace(planetToDelete.planet_name+' ','',1)
+        active_user.favorites = PlanetRemoved
+
+
+    elif planetToDelete.planet_name in active_user.favorites:
          PlanetRemoved = active_user.favorites.replace(planetToDelete.planet_name,'',1)
-         
          active_user.favorites = PlanetRemoved
     # if planetToDelete.planet_name+' ' in active_user.favorites:
     #      newFavorites = active_user.favorites.replace(planetToDelete.planet_name+' ','',1)
@@ -197,15 +206,19 @@ def delete_character_from_favorites(people_id):
     CharacterToDelete = Character.query.get(people_id)
     active_user = User.query.filter_by(is_active=True).first()
 
-    if CharacterToDelete.character_name in active_user.favorites:
-         active_user.favorites = active_user.favorites.replace(CharacterToDelete.character_name,'',1)
-
     if ' '+CharacterToDelete.character_name in active_user.favorites:
-         characterRemoved = active_user.favorites.replace(' '+CharacterToDelete.character_name,'',1)
-         active_user.favorites = characterRemoved
-    # if planetToDelete.planet_name+' ' in active_user.favorites:
-    #      newFavorites = active_user.favorites.replace(planetToDelete.planet_name+' ','',1)
-    #      active_user.favorites = newFavorites
+        characterRemoved = active_user.favorites.replace(' '+CharacterToDelete.character_name,'',1)
+        active_user.favorites = characterRemoved
+    
+    elif CharacterToDelete.character_name+' ' in active_user.favorites:
+        new = active_user.favorites.replace(CharacterToDelete.character_name+' ','',1)
+        active_user.favorites = new
+
+    elif CharacterToDelete.character_name in active_user.favorites:
+        new = active_user.favorites.replace(CharacterToDelete.character_name,'',1)
+        active_user.favorites = new
+
+    
     
     db.session.add(active_user)
     db.session.commit()
