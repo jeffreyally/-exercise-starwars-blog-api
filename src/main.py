@@ -98,14 +98,17 @@ def get_planets():
 
     return jsonify(allusers), 200
 
-# @app.route('/onechar', methods=['GET'])
-# def char():
+@app.route('/onechar', methods=['GET'])
+def char():
 
-#     allusers = Character.query.get(1)
-#     allusers.favorited_by = 1
-#     db.session.add(allusers)
-#     db.session.commit()
-#     return jsonify(allusers.serialize())
+    firstchar = Character.query.get(1)
+    firstchar.favorited_by = 1
+    db.session.add(firstchar)
+    db.session.commit()
+    user = User.query.get(1)
+    user.favorites = firstchar.character_name
+  
+    return jsonify(user.favorites)
 
     
 

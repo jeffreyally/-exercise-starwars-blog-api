@@ -12,6 +12,7 @@ class User(db.Model):
     #is_active = db.Column(db.Boolean(), unique=False, nullable=False)
     favorite_characters = db.relationship('Character', backref = 'user')
     favorite_planets = db.relationship('Planet', backref = 'user')
+    favorites = db.Column(db.String(999), unique=False, nullable=True)
     
     def __repr__(self):
         return '<Planets %r>' % self.email
@@ -22,8 +23,9 @@ class User(db.Model):
             "email": self.email,
             "password":self.password,
             "username":self.username,
-            "favorite_characters": self.favorite_characters,
-            "favorite_planets": self.favorite_planets,
+            "favorites": self.favorites
+            #"favorite_characters": self.favorite_characters,
+            #"favorite_planets": self.favorite_planets,
             
         }
 
