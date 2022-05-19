@@ -137,11 +137,15 @@ def user_favorites():
 @app.route('/favorite/planet/<int:planet_id>', methods=['POST']) #adds a planet to favorites
 def add_planet_to_favorite(planet_id):
     planetToAdd = Planet.query.get(planet_id)
-    active_user = User.query.filter_by(is_active=True)
-    #active_user.favorites = planetToAdd.planet_name
+    active_user = User.query.filter_by(is_active=True).first()
+    # if planetToAdd.planet_name in active_user.favorites:
+    #     return "This favorite already exists in the favorites list", 400
+    active_user.favorites = active_user.favorites + ' '+ planetToAdd.planet_name
+    
     db.session.add(active_user)
     db.session.commit()
-    return jsonify(active_user)
+    
+    return jsonify(active_user.serialize())
 
 
 
