@@ -1,3 +1,5 @@
 
-# Remember to migrate every time you change your models
+The routes below create a sample user, sample characters, and sample planets
+
+
 
