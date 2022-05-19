@@ -78,7 +78,7 @@ def get_users():
     allUsers = list(map(lambda x: x.serialize(), allUsers))
     
 
-    return jsonify(allPlanets), 200
+    return jsonify(allUsers), 200
 
 @app.route('/users/<int:id>', methods=['GET'])#returns one user from database
 def get_one_user(id):
@@ -211,7 +211,7 @@ def delete_character_from_favorites(character_id):
 
 
 @app.route('/users/favorites', methods=['GET'])#returns favorites from user
-def get_favorites(id):
+def get_favorites():
 
     active_user = User.query.filter_by(is_active=True).first()
     return jsonify(active_user.favorites), 200
