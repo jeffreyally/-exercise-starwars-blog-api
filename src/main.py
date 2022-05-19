@@ -31,7 +31,7 @@ def sitemap():
     return generate_sitemap(app)
 
 
-@app.route('/user', methods=['POST'])
+@app.route('/user', methods=['POST'])#functional
 def post_user():
     
     new_user = User(username= 'SampleUsername', email='SampleEmail@email.com', password= 'SamplePassword')
@@ -41,34 +41,38 @@ def post_user():
     allusers = list(map(lambda x: x.serialize(), allusers))
     return jsonify(allusers)
 
-@app.route('/people', methods=['POST'])
+@app.route('/people', methods=['POST'])#functional
 def post_character():
     #body = request.get_json()
     #new_user = User(username= body["username"], email=body["email"], password= body["password"])
     new_user1 = Character(character_name = "Chewbacca")
     new_user2 = Character(character_name = "Han Solo")
+    new_user3 = Character(character_name = "Darth Vader")
     db.session.add(new_user1)
     db.session.add(new_user2)
+    db.session.add(new_user3)
     db.session.commit()
     allusers = Character.query.all()
     allusers = list(map(lambda x: x.serialize(), allusers))
     return jsonify(allusers)
 
-@app.route('/planets', methods=['POST'])
+@app.route('/planets', methods=['POST']) #functional
 def post_planet():
     #body = request.get_json()
     #new_user = User(username= body["username"], email=body["email"], password= body["password"])
     new_user1 = Planet(planet_name = "Alderaan")
     new_user2 = Planet(planet_name = "Naboo")
+    new_user3 = Planet(planet_name = "Mandalore")
     db.session.add(new_user1)
     db.session.add(new_user2)
+    db.session.add(new_user3)
     db.session.commit()
     allusers = Planet.query.all()
     allusers = list(map(lambda x: x.serialize(), allusers))
     return jsonify(allusers)
 
-@app.route('/user', methods=['GET'])
-def handle_hello():
+@app.route('/user', methods=['GET'])#functional
+def get_users():
 
     allusers = User.query.all()
     allusers = list(map(lambda x: x.serialize(), allusers))
@@ -76,15 +80,36 @@ def handle_hello():
 
     return jsonify(allusers), 200
 
-@app.route('/fakefav', methods=['GET'])
-def fakefav():
-    User1 = User.query.get(1)
-    User1.favorite_characters.append('Vader')
-    db.session.add(User1)
-    db.session.commit()
-    allusers = User.query.all()
+@app.route('/people', methods=['GET'])#functional
+def get_people():
+
+    allusers = Character.query.all()
     allusers = list(map(lambda x: x.serialize(), allusers))
     return jsonify(allusers)
+
+    return jsonify(allusers), 200
+
+@app.route('/planet', methods=['GET'])#functional
+def get_planets():
+
+    allusers = Planet.query.all()
+    allusers = list(map(lambda x: x.serialize(), allusers))
+    return jsonify(allusers)
+
+    return jsonify(allusers), 200
+
+# @app.route('/onechar', methods=['GET'])
+# def char():
+
+#     allusers = Character.query.get(1)
+#     allusers.favorited_by = 1
+#     db.session.add(allusers)
+#     db.session.commit()
+#     return jsonify(allusers.serialize())
+
+    
+
+
 
 
     

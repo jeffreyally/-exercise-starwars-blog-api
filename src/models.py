@@ -10,8 +10,8 @@ class User(db.Model):
     email = db.Column(db.String(120), unique=False, nullable=False)
     password = db.Column(db.String(80), unique=False, nullable=False)
     #is_active = db.Column(db.Boolean(), unique=False, nullable=False)
-    favorite_characters = db.relationship('Character')
-    favorite_planets = db.relationship('Planet')
+    favorite_characters = db.relationship('Character', backref = 'user')
+    favorite_planets = db.relationship('Planet', backref = 'user')
     
     def __repr__(self):
         return '<Planets %r>' % self.email
