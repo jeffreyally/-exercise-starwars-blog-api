@@ -10,8 +10,8 @@ class User(db.Model):
     email = db.Column(db.String(120), unique=False, nullable=False)
     password = db.Column(db.String(80), unique=False, nullable=False)
     is_active = db.Column(db.Boolean(), unique=False, nullable=False)
-    favorite_characters = db.relationship('Character', backref = 'user')
-    favorite_planets = db.relationship('Planet', backref = 'user')
+    # favorite_characters = db.relationship('Character', backref = 'user')
+    # favorite_planets = db.relationship('Planet', backref = 'user')
     favorites = db.Column(db.String(999), unique=False, nullable=True)
     
     def __repr__(self):
@@ -35,7 +35,7 @@ class Character(db.Model):
     __tablename__ = 'character'
     id = db.Column(db.Integer, primary_key=True)
     character_name = db.Column(db.String(40))
-    favorited_by = db.Column(db.Integer, db.ForeignKey('user.id'))
+    # favorited_by = db.Column(db.Integer, db.ForeignKey('user.id'))
     
 
     def __repr__(self):
@@ -45,7 +45,7 @@ class Character(db.Model):
         return {
             "id": self.id,
             "character_name": self.character_name,
-            "favorited_by":self.favorited_by
+            # "favorited_by":self.favorited_by
             
             
         }
@@ -55,7 +55,7 @@ class Planet(db.Model):
     __tablename__ = 'planet'
     id = db.Column(db.Integer, primary_key=True)
     planet_name = db.Column(db.String(40))
-    favorited_by = db.Column(db.Integer,db.ForeignKey('user.id'))
+    # favorited_by = db.Column(db.Integer,db.ForeignKey('user.id'))
     
 
     def __repr__(self):
@@ -65,7 +65,7 @@ class Planet(db.Model):
         return {
             "id": self.id,
             "name": self.planet_name,
-            "favorited_by": self.favorited_by,
+            # "favorited_by": self.favorited_by,
             
             
         }
