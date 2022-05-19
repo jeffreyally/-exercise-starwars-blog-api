@@ -64,7 +64,7 @@ class Planet(db.Model):
     def serialize(self):
         return {
             "id": self.id,
-            "name": self.planet_name,
+            "planet_name": self.planet_name,
             # "favorited_by": self.favorited_by,
             
             
