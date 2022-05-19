@@ -34,7 +34,7 @@ def sitemap():
 @app.route('/user', methods=['POST'])#generates the sample user
 def post_user():
     
-    new_user = User(username= 'SampleUsername', email='SampleEmail@email.com', password= 'SamplePassword')
+    new_user = User(username= 'SampleUsername', email='SampleEmail@email.com', password= 'SamplePassword', is_active=True)
     db.session.add(new_user)
     db.session.commit()
     allusers = User.query.all()
@@ -124,6 +124,24 @@ def get_one_planet(id):
     
 
     return jsonify(onePlanet.serialize()), 200
+
+@app.route('/users/favorites', methods=['GET'])#returns favorites from the user
+def user_favorites():
+    theUser = User.query.get(1)
+
+    
+    return jsonify(theUser.favorites), 200
+
+
+
+@app.route('/favorite/planet/<int:planet_id>', methods=['POST']) #adds a planet to favorites
+def add_planet_to_favorite(planet_id):
+    planetToAdd = Planet.query.get(planet_id)
+    active_user = User.query.filter_by(is_active=True)
+    #active_user.favorites = planetToAdd.planet_name
+    db.session.add(active_user)
+    db.session.commit()
+    return jsonify(active_user)
 
 
 

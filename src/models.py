@@ -9,7 +9,7 @@ class User(db.Model):
     
     email = db.Column(db.String(120), unique=False, nullable=False)
     password = db.Column(db.String(80), unique=False, nullable=False)
-    #is_active = db.Column(db.Boolean(), unique=False, nullable=False)
+    is_active = db.Column(db.Boolean(), unique=False, nullable=False)
     favorite_characters = db.relationship('Character', backref = 'user')
     favorite_planets = db.relationship('Planet', backref = 'user')
     favorites = db.Column(db.String(999), unique=False, nullable=True)
@@ -23,7 +23,8 @@ class User(db.Model):
             "email": self.email,
             "password":self.password,
             "username":self.username,
-            "favorites": self.favorites
+            "favorites": self.favorites,
+            "is_actve": self.is_active
             #"favorite_characters": self.favorite_characters,
             #"favorite_planets": self.favorite_planets,
             
