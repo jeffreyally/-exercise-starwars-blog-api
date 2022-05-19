@@ -71,7 +71,7 @@ def post_planet():
     allPlanets = list(map(lambda x: x.serialize(), allPlanets))
     return jsonify(allPlanets)
 
-@app.route('/user', methods=['GET'])#returns all users
+@app.route('/users', methods=['GET'])#returns all people in database
 def get_users():
 
     allUsers = User.query.all()
@@ -80,7 +80,7 @@ def get_users():
 
     return jsonify(allPlanets), 200
 
-@app.route('/user/<int:id>', methods=['GET'])#returns one user
+@app.route('/users/<int:id>', methods=['GET'])#returns one user from database
 def get_one_user(id):
 
     oneUser = User.query.get(id)
@@ -103,7 +103,7 @@ def get_one_character(id):
 
 
 
-@app.route('/planet', methods=['GET'])#returns all starwars planets
+@app.route('/planets', methods=['GET'])#returns all starwars planets in database
 def get_planets():
 
     allPlanets = Planet.query.all()
@@ -113,7 +113,7 @@ def get_planets():
     return jsonify(allPlanets), 200
 
 
-@app.route('/planet/<int:id>', methods=['GET'])#returns one starwars planet
+@app.route('/planets/<int:id>', methods=['GET'])#returns one starwars planet from database
 def get_one_planet(id):
 
     onePlanet = Planet.query.get(id)
@@ -122,7 +122,7 @@ def get_one_planet(id):
 
 
 
-@app.route('/favorite/planet/<int:planet_id>', methods=['POST']) #adds a planet to favorites
+@app.route('/favorite/planet/<int:planet_id>', methods=['POST']) #adds a new planet to the favorites
 def add_planet_to_favorite(planet_id):
     planetToAdd = Planet.query.get(planet_id)
     active_user = User.query.filter_by(is_active=True).first()
@@ -164,7 +164,7 @@ def delete_planet_from_favorites(planet_id):
     
     return jsonify(active_user.serialize())
 
-@app.route('/favorite/people/<int:people_id>', methods=['POST']) #adds a character to favorites
+@app.route('/favorite/people/<int:people_id>', methods=['POST']) #adds a new character to favorites
 def add_character_to_favorite(people_id):
     CharacterToAdd = Character.query.get(people_id)
     active_user = User.query.filter_by(is_active=True).first()
